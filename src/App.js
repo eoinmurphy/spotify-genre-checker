@@ -27,6 +27,7 @@ class App extends Component {
   }
   render() {
     let userName = this.state.user;
+    console.log(userName); 
     return (
       <div className="App">
         {this.state.user ?
@@ -43,6 +44,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;
