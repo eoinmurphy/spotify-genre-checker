@@ -14,6 +14,7 @@ class App extends Component {
   componentDidMount() {
     let parsed = queryString.parse(window.location.search);
     let accessToken = parsed.access_token;
+    console.log(parsed);
     if (!accessToken) return;
     fetch("https://api.spotify.com/v1/me", {
       headers: { Authorization: "Bearer " + accessToken },
@@ -32,14 +33,12 @@ class App extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    // alert(this.state.value);
     let path = 'spotify' + new URL(this.state.value).pathname;
     let uri = path.split('/')[2]
     console.log('https://api.spotify.com/v1/tracks/' + uri)
   }
   render() {
     let userName = this.state.user;
-    console.log(userName);
     return (
       <div className="App">
         {this.state.user ? (
