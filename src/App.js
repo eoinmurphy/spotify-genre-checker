@@ -27,9 +27,12 @@ class App extends Component {
         })
       );
   }
+  handleChange = (event) => {
+    this.setState({value: event.target.value})
+  }
   handleSubmit = (event) => {
     event.preventDefault();
-    alert("Alert!");
+    alert(this.state.value);
   }
   render() {
     let userName = this.state.user;
@@ -42,7 +45,7 @@ class App extends Component {
             <form onSubmit={this.handleSubmit}>
               <label>
                 URL:
-                <input type="text" />
+                <input type="text" value={this.state.value} onChange={this.handleChange}/>
               </label>
               <br />
               <input type="submit" value="Submit" />
