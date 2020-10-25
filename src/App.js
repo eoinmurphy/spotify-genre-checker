@@ -32,7 +32,10 @@ class App extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    alert(this.state.value);
+    // alert(this.state.value);
+    let path = 'spotify' + new URL(this.state.value).pathname;
+    let uri = path.split('/')[2]
+    console.log('https://api.spotify.com/v1/tracks/' + uri)
   }
   render() {
     let userName = this.state.user;
