@@ -7,10 +7,7 @@ let showTrack = false;
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      //serverData = {},
-      //filterString = ''
-    };
+    this.state = {};
   }
   componentDidMount() {
     let parsed = queryString.parse(window.location.search);
@@ -30,10 +27,11 @@ class App extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
+    // TODO: Add urlHandler() call here for another file (e.g. urlHandler.js)
     let path = "spotify" + new URL(this.state.value).pathname;
     let uri = path.split("/")[2];
     let showTrack = true;
-    console.log("uri: " + uri);
+    // TODO: Try to figure out a cleaner way of handling .setState
     instance.get("/tracks/" + uri).then((response) => {
       this.setState({
         track: {
@@ -41,23 +39,15 @@ class App extends Component {
           name: response.data.name,
         },
       });
-      console.log('artist: ' + this.state.track.artist)
-      console.log('name: ' + this.state.track.name);
       instance.get("/artists/" + response.data.artists[0].id).then((response) => {
         this.setState({
           genres: response.data.genres,
         })
-        console.log('genres: ' + this.state.genres);
       })
-      console.log(response.data);
     });
   };
   render() {
-    // let userName = this.state.user;
-    console.log(this.state.user)
-    // let trackName = this.state.track;
-    const genres = this.state.genres;
-    console.log(genres);
+    // const genres = this.state.genres;
     return (
       <div className="App">
         {this.state.user ? (
