@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import queryString from "query-string";
-import { instance, SetAuthToken } from "./axiosInstance";
+import { instance, SetAuthToken } from "./utils/axiosInstance";
+import urlHandler from './utils/urlHandler';
 
 let showTrack = false;
 class App extends Component {
@@ -27,18 +28,18 @@ class App extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Add urlHandler() call here for another file (e.g. urlHandler.js)
-    let path = "spotify" + new URL(this.state.value).pathname;
-    let uri = path.split("/")[2];
-    let showTrack = true;
-    // TODO: Try to figure out a cleaner way of handling .setState
-    instance.get("/tracks/" + uri).then((response) => {
+    let url = this.state.value;
+
+    /* == Get track == */
+    instance.get("/tracks/" + urlHandler(url)).then((response) => {
       this.setState({
         track: {
           artist: response.data.artists[0].name,
           name: response.data.name,
         },
       });
+      
+      /* == Get primary artist == */
       instance.get("/artists/" + response.data.artists[0].id).then((response) => {
         this.setState({
           genres: response.data.genres,
