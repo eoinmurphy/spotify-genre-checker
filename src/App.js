@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import queryString from "query-string";
 import { instance, SetAuthToken } from "./utils/axiosInstance";
-import urlHandler from './utils/urlHandler';
+import urlHandler from "./utils/urlHandler";
 
 let showTrack = false;
 class App extends Component {
@@ -16,9 +16,10 @@ class App extends Component {
     SetAuthToken(accessToken);
     if (!accessToken) return;
     instance.get("/me").then((response) => {
+      let displayName = response.data.display_name;
       this.setState({
         user: {
-          name: response.data.display_name,
+          name: displayName,
         },
       });
     });
@@ -32,23 +33,31 @@ class App extends Component {
 
     /* == Get track == */
     instance.get("/tracks/" + urlHandler(url)).then((response) => {
+      showTrack = true;
       this.setState({
         track: {
           artist: response.data.artists[0].name,
           name: response.data.name,
         },
       });
-      
+
       /* == Get primary artist == */
-      instance.get("/artists/" + response.data.artists[0].id).then((response) => {
-        this.setState({
-          genres: response.data.genres,
-        })
-      })
+      instance
+        .get("/artists/" + response.data.artists[0].id)
+        .then((response) => {
+          this.setState({
+            genres: response.data.genres,
+          });
+        });
     });
   };
   render() {
-    // const genres = this.state.genres;
+    const genres = this.state.genres;
+    {
+      if (showTrack) {
+        console.log(genres);
+      }
+    }
     return (
       <div className="App">
         {this.state.user ? (
@@ -66,15 +75,25 @@ class App extends Component {
               <br />
               <input type="submit" value="Submit" />
             </form>
-            {/* // TODO: Update to conditional check for `showTrack` instead of calling `this.state` */}
-            {this.state.track ? (
+            {showTrack ? (
               <div>
                 <h1>Track: {this.state.track.name}</h1>
                 <h1>Artist: {this.state.track.artist}</h1>
-                <h1>{this.state.genres}</h1>
+                <p>{this.state.genres}</p>
+                <div>
+                  {/* <ul>
+                  {this.state.genres.map((genre, index) => {
+                    return (
+                      <li>
+                        {index}: {genre}
+                      </li>
+                    );
+                  })}
+                  </ul> */}
+                </div>
               </div>
             ) : (
-              <span>&#8203;</span> 
+              <span>&#8203;</span>
             )}
           </div>
         ) : (
