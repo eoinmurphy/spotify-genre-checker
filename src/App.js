@@ -3,6 +3,7 @@ import "./App.css";
 import queryString from "query-string";
 import { instance, SetAuthToken } from "./utils/axiosInstance";
 import urlHandler from "./utils/urlHandler";
+import urlType from "./utils/urlType";
 
 let showTrack = false;
 class App extends Component {
@@ -30,17 +31,20 @@ class App extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     let url = this.state.value;
-
+    let apiType = urlType(url);
+    // TODO: Set a variable to call urlReducer function here to determine whether the URL is a track, artist or album
+    // TODO: Refactor `instance.get` to `instance.get("/{urlType}/" + urlHandler(url))...
     /* == Get track == */
-    instance.get("/tracks/" + urlHandler(url)).then((response) => {
+    instance.get("/" + apiType + "/" + urlHandler(url)).then((response) => {
       showTrack = true;
+      // TODO: Refactor this to be dynamic such that the state is set based on the apiType value
       this.setState({
         track: {
           artist: response.data.artists[0].name,
           name: response.data.name,
         },
       });
-
+      // TODO: Once the above setState is refactored, remove this! 
       /* == Get primary artist == */
       instance
         .get("/artists/" + response.data.artists[0].id)
@@ -81,7 +85,13 @@ class App extends Component {
                 <h1>Artist: {this.state.track.artist}</h1>
                 <p>{this.state.genres}</p>
                 <div>
-                  {/* <ul>
+                
+                  {/* TODO: Figure out why genres returns undefined on the first run. It should be excluded by the conditional above
+                            so this map shouldn't fail. I've tried adding a return() statement to the callback of .map, but that
+                            it still returns an error. 
+
+                            The showTrack ? conditional above musn't be doing what it needs to!
+                  <ul>
                   {this.state.genres.map((genre, index) => {
                     return (
                       <li>
