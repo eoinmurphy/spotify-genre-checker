@@ -65,10 +65,9 @@ class App extends Component {
               <br />
               <input type="submit" value="Submit" />
             </form>
-            // TODO: Update to conditional check for `showTrack` instead of calling `this.state`
+            {/* // TODO: Update to conditional check for `showTrack` instead of calling `this.state` */}
             {this.state.track ? (
               <div>
-              // TODO: 
                 <h1>Track: {this.state.track.name}</h1>
                 <h1>Artist: {this.state.track.artist}</h1>
                 <h1>{this.state.genres}</h1>
