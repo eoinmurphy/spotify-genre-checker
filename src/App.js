@@ -5,6 +5,7 @@ import { instance, SetAuthToken } from "./utils/axiosInstance";
 import urlHandler from "./utils/urlHandler";
 import urlType from "./utils/urlType";
 
+// TODO: Confirm if this is the best way to set this global
 let showTrack = false;
 class App extends Component {
   constructor() {
@@ -44,7 +45,7 @@ class App extends Component {
           name: response.data.name,
         },
       });
-      // TODO: Once the above setState is refactored, remove this! 
+      // TODO: Once the above setState is refactored, remove this!
       /* == Get primary artist == */
       instance
         .get("/artists/" + response.data.artists[0].id)
@@ -85,7 +86,6 @@ class App extends Component {
                 <h1>Artist: {this.state.track.artist}</h1>
                 <p>{this.state.genres}</p>
                 <div>
-                
                   {/* TODO: Figure out why genres returns undefined on the first run. It should be excluded by the conditional above
                             so this map shouldn't fail. I've tried adding a return() statement to the callback of .map, but that
                             it still returns an error. 
