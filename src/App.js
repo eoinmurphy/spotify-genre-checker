@@ -32,8 +32,7 @@ class App extends Component {
     event.preventDefault();
     let url = this.state.value;
     let apiType = urlType(url);
-    // TODO: Set a variable to call urlReducer function here to determine whether the URL is a track, artist or album
-    // TODO: Refactor `instance.get` to `instance.get("/{urlType}/" + urlHandler(url))...
+    // TODO: Create getData(apiType) and separate out the logic for getting a track, artist or album
     /* == Get track == */
     instance.get("/" + apiType + "/" + urlHandler(url)).then((response) => {
       showTrack = true;
@@ -61,74 +60,87 @@ class App extends Component {
       <div className="App">
         {this.state.user ? (
           <div className="li-container">
-            <div className="li-header">
-              <h2 className="li-heading">Spotify Genre Checker</h2>
-              <p>
-                <span className="li-subtitle">
-                  But <i>which</i> playlist?
-                </span>
-              </p>
-            </div>
-            <div className="li-body">
-              <div className="li-body-left">
-                <h2 className="li-how-to">How do I use this?</h2>
-                <ul className="li-how-to-steps">
-                  <li>Go to Spotify</li>
-                  <li>Tap or right click a track</li>
-                  <li>Copy the URL</li>
-                  <li>Paste below</li>
-                  <li>Et voila</li>
-                </ul>
-                <div className="li-form">
-                  <form onSubmit={this.handleSubmit}>
-                    <label for="url" className="li-form-label">
-                      Enter URL:
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      name="url"
-                      className="li-form-input"
-                      placeholder="e.g. https://spotify.com/track/..."
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                    />
-                    <br />
-                    {/* <input type="submit" value="" /> */}
-                  </form>
-                </div>
-                <div className="li-history">
-                  <h2 className="li-history-heading">History</h2>
-                  <p>
-                    Coming soon! <i>(maybe)</i>
-                  </p>
-                </div>
+            {/* TODO: Figure out why this doubles in height once a track is submitted */}
+            <div className="div1">
+              <div className="li-header">
+                <h1 className="li-heading">Spotify Genre Checker</h1>
+                <p>
+                  <span className="li-subtitle">
+                    But <i>which</i> playlist?
+                  </span>
+                </p>
               </div>
-              {/* TODO: Float right correctly */}
-              <div className="li-body-right">
-                {this.state.genres ? (
+            </div>
+            <div className="div2">
+              <h2 className="li-how-to">How do I use this?</h2>
+              <ul className="li-how-to-steps">
+                <li>Go to Spotify</li>
+                <li>Tap or right click a track</li>
+                <li>Copy the URL</li>
+                <li>Paste below</li>
+                <li>Et voila</li>
+              </ul>
+              <div className="li-form">
+                <form onSubmit={this.handleSubmit}>
+                  <label htmlFor="url" className="li-form-label">
+                    Enter URL:
+                  </label>
+                  <br />
+                  <input
+                    type="text"
+                    name="url"
+                    className="li-form-input"
+                    placeholder="e.g. https://spotify.com/track/..."
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                  <br />
+                  {/* <input type="submit" value="" /> */}
+                </form>
+              </div>
+              <div className="li-history">
+                <h2 className="li-history-heading">History</h2>
+                <p>
+                  Coming soon! <i>(maybe)</i>
+                </p>
+              </div>
+            </div>
+            {/* TODO: Refactor such that the parents of div3 and 4 are outside the conditional, but that both of their 
+                      bodies are contained within it.
+                      
+                      Having the parents inside the conditional seems to cause the CSS grid to break.
+             */}
+            <div className="div3">
+              {this.state.genres ? (
+                <div>
+                  <img src={this.state.track.artwork} />
+                  <h1>{this.state.track.name}</h1>
+                  <h1>{this.state.track.artist}</h1>
                   <div>
-                    {console.log("showTrack: " + showTrack)}
-                    <h1>Track: {this.state.track.name}</h1>
-                    <h1>Artist: {this.state.track.artist}</h1>
-                    <div>
-                      <h1>Genres:</h1>
-                      <ul>
-                        {this.state.genres.map((genre, index) => {
-                          return (
-                            <li key={index}>
-                              {index}: {genre}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      <h1>Artwork</h1>
-                      <img src={this.state.track.artwork} />
-                    </div>
+                    <h1>Genres:</h1>
+                    <ul>
+                      {this.state.genres.map((genre, index) => {
+                        return (
+                          <li key={index}>
+                            {index}: {genre}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                ) : (
-                  <span>&#8203;</span>
-                )}
+                </div>
+              ) : (
+                <span>&#8203;</span>
+              )}
+            </div>
+            <div className="div4">
+              <div className="li-sub-container">
+                {/* TODO: Move mapped <ul> from above here */}
+                <div className="div5"><h2>Genres</h2></div>
+                {/* TODO: get/v1/artists/{id}/top-tracks and return to state */}
+                <div className="div6"><h2>Top tracks</h2></div>
+                {/* TODO: get/v1/artists/{id}/related-artists and return to state */}
+                <div className="div7"><h2>Related artists</h2></div>
               </div>
             </div>
           </div>
