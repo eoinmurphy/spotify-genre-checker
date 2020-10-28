@@ -124,18 +124,17 @@ class App extends Component {
                       src={this.state.track.artwork}
                     />
                   </div>
-                  <div>
-                    <h1>Genres:</h1>
-                    <ul>
-                      {this.state.genres.map((genre, index) => {
-                        return (
-                          <li key={index}>
-                            {index}: {genre}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+                  <div className="li-genres">
+                  <ul>
+                    {this.state.genres.map((genre, index) => {
+                      return (
+                        <li key={index}>
+                          {index}: {genre}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
                 </div>
               ) : (
                 <span>&#8203;</span>
