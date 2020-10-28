@@ -58,7 +58,7 @@ class App extends Component {
     if (this.state.genres === null) return null;
     return (
       <div className="App">
-      {/* TODO: Convert each of the "sections" below to their own components and call them in */}
+        {/* TODO: Convert each of the "sections" below to their own components and call them in */}
         {this.state.user ? (
           <div className="li-container">
             {/* TODO: Figure out why this doubles in height once a track is submitted */}
@@ -116,9 +116,14 @@ class App extends Component {
             <div className="div3">
               {this.state.genres ? (
                 <div>
-                  <img src={this.state.track.artwork} />
                   <h1>{this.state.track.name}</h1>
                   <h1>{this.state.track.artist}</h1>
+                  <div className="li-artwork-container">
+                    <img
+                      className="li-artwork"
+                      src={this.state.track.artwork}
+                    />
+                  </div>
                   <div>
                     <h1>Genres:</h1>
                     <ul>
@@ -139,11 +144,17 @@ class App extends Component {
             <div className="div4">
               <div className="li-sub-container">
                 {/* TODO: Move mapped <ul> from above here */}
-                <div className="div5"><h2>Genres</h2></div>
+                <div className="div5">
+                  <h2>Genres</h2>
+                </div>
                 {/* TODO: get/v1/artists/{id}/top-tracks and return to state */}
-                <div className="div6"><h2>Top tracks</h2></div>
+                <div className="div6">
+                  <h2>Top tracks</h2>
+                </div>
                 {/* TODO: get/v1/artists/{id}/related-artists and return to state */}
-                <div className="div7"><h2>Related artists</h2></div>
+                <div className="div7">
+                  <h2>Related artists</h2>
+                </div>
               </div>
             </div>
           </div>

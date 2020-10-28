@@ -128,3 +128,13 @@
   padding: 1em;
   color: #505050;
 }
+
+.li-artwork-artwork {
+  width: 5%;
+  height: 5%;
+}
+
+.li-artwork {
+  width: 10%;
+  height: auto;
+}
