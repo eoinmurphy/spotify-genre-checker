@@ -28,6 +28,8 @@
   color: #61dafb;
 }
 
+/* TODO: Think about media queries for mobile layout */
+
 /* TODO: Push all text content 2em in */
 
 .li-container {
@@ -75,6 +77,7 @@
   grid-area: 1 / 3 / 2 / 4;
 }
 
+/* TODO: Add CSS grid for logged out page too, this is currently just vanilla */
 .lo-container {
   text-align: center;
 }

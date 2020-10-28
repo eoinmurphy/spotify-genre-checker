@@ -58,6 +58,7 @@ class App extends Component {
     if (this.state.genres === null) return null;
     return (
       <div className="App">
+      {/* TODO: Convert each of the "sections" below to their own components and call them in */}
         {this.state.user ? (
           <div className="li-container">
             {/* TODO: Figure out why this doubles in height once a track is submitted */}
@@ -86,6 +87,8 @@ class App extends Component {
                     Enter URL:
                   </label>
                   <br />
+                  {/* TODO: Add validation here for URL check and URL type check 
+                  (e.g. if .pathname !== track/artist then change CSS state to red) */}
                   <input
                     type="text"
                     name="url"
